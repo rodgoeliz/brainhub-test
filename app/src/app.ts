@@ -35,7 +35,6 @@ const apolloServer = new ApolloServer({
   context: ({ req }) => {
     const token = req.headers.authorization || "";
     const user = decodedToken(token);
-    console.log(token);
     return { user };
   },
 });
