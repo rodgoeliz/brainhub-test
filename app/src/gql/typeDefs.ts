@@ -4,7 +4,7 @@ export const typeDefs = gql`
   type User {
     id: ID!
     email: String!
-    username: String!
+    password: String!
   }
 
   type Event {
@@ -15,24 +15,35 @@ export const typeDefs = gql`
     eventDate: Date!
   }
 
-  type Query {
-    events: [Event]
-    event(eventId: ID!): Event
-  }
-
   type EventUpdateResponse {
     success: Boolean!
+    message: String!
+    event: Event
+  }
+  input RegisterEventInput {
+    name: String!
+    lastName: String!
+    email: String!
+    eventDate: Date!
+  }
+
+  input UserLoginInput {
+    email: String!
+    password: String!
+  }
+
+  type AuthPayLoad {
+    token: String
     message: String
-    event: [Event]
+  }
+
+  type Query {
+    events: [Event!]!
   }
 
   type Mutation {
-    registerEvent(
-      name: String!
-      lastName: String!
-      email: String!
-      eventDate: Date!
-    ): EventUpdateResponse!
+    login(data: UserLoginInput!): AuthPayLoad!
+    registerEvent(event: RegisterEventInput!): EventUpdateResponse!
   }
 
   scalar Date

@@ -7,11 +7,11 @@ export const dateScalar = new GraphQLScalarType({
     return value;
   },
   parseValue(value) {
-    return new Date(value); // Convert incoming integer to Date
+    return value; // Convert incoming integer to Date
   },
   parseLiteral(ast) {
-    if (ast.kind === Kind.INT) {
-      return parseInt(ast.value, 10); // Convert hard-coded AST string to type expected by parseValue
+    if (ast.kind === Kind.STRING) {
+      return ast.value; // Convert hard-coded AST string to type expected by parseValue
     }
     return null; // Invalid hard-coded value (not an integer)
   },

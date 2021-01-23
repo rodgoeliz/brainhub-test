@@ -4,8 +4,6 @@
     "moduleResolution": "node",
     "module": "commonjs",
     "sourceMap": true,
-    "rootDir": "src",
-    "outDir": "dist",
     "composite": true,
     "esModuleInterop": true,
     "declaration": true,
@@ -14,8 +12,6 @@
     "strict": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedParameters": true,
     "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["esnext", "dom"]

@@ -5,5 +5,5 @@ generates:
     plugins:
       - "typescript"
       - "typescript-resolvers"
-      - "typescript-mongodb"
-
+    config:
+      avoidOptionals: true

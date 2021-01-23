@@ -14,19 +14,11 @@ export type Scalars = {
   Date: any;
 };
 
-
-
-
-
-
-
-
-
 export type User = {
   __typename?: 'User';
   id: Scalars['ID'];
   email: Scalars['String'];
-  username: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type Event = {
@@ -38,42 +30,52 @@ export type Event = {
   eventDate: Scalars['Date'];
 };
 
-export type Query = {
-  __typename?: 'Query';
-  events?: Maybe<Array<Maybe<Event>>>;
-  event?: Maybe<Event>;
-};
-
-
-export type QueryEventArgs = {
-  eventId: Scalars['ID'];
-};
-
 export type EventUpdateResponse = {
   __typename?: 'EventUpdateResponse';
   success: Scalars['Boolean'];
-  message?: Maybe<Scalars['String']>;
-  event?: Maybe<Array<Maybe<Event>>>;
+  message: Scalars['String'];
+  event: Maybe<Event>;
 };
 
-export type Mutation = {
-  __typename?: 'Mutation';
-  registerEvent: EventUpdateResponse;
-};
-
-
-export type MutationRegisterEventArgs = {
+export type RegisterEventInput = {
   name: Scalars['String'];
   lastName: Scalars['String'];
   email: Scalars['String'];
   eventDate: Scalars['Date'];
 };
 
-
-export type AdditionalEntityFields = {
-  path?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
+export type UserLoginInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
+
+export type AuthPayLoad = {
+  __typename?: 'AuthPayLoad';
+  token: Maybe<Scalars['String']>;
+  message: Maybe<Scalars['String']>;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  events: Array<Event>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  login: AuthPayLoad;
+  registerEvent: EventUpdateResponse;
+};
+
+
+export type MutationLoginArgs = {
+  data: UserLoginInput;
+};
+
+
+export type MutationRegisterEventArgs = {
+  event: RegisterEventInput;
+};
+
 
 
 
@@ -157,12 +159,14 @@ export type ResolversTypes = {
   ID: ResolverTypeWrapper<Scalars['ID']>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Event: ResolverTypeWrapper<Event>;
-  Query: ResolverTypeWrapper<{}>;
   EventUpdateResponse: ResolverTypeWrapper<EventUpdateResponse>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  RegisterEventInput: RegisterEventInput;
+  UserLoginInput: UserLoginInput;
+  AuthPayLoad: ResolverTypeWrapper<AuthPayLoad>;
+  Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
-  AdditionalEntityFields: AdditionalEntityFields;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -171,79 +175,52 @@ export type ResolversParentTypes = {
   ID: Scalars['ID'];
   String: Scalars['String'];
   Event: Event;
-  Query: {};
   EventUpdateResponse: EventUpdateResponse;
   Boolean: Scalars['Boolean'];
+  RegisterEventInput: RegisterEventInput;
+  UserLoginInput: UserLoginInput;
+  AuthPayLoad: AuthPayLoad;
+  Query: {};
   Mutation: {};
   Date: Scalars['Date'];
-  AdditionalEntityFields: AdditionalEntityFields;
 };
 
-export type UnionDirectiveArgs = {   discriminatorField?: Maybe<Scalars['String']>;
-  additionalFields?: Maybe<Array<Maybe<AdditionalEntityFields>>>; };
-
-export type UnionDirectiveResolver<Result, Parent, ContextType = any, Args = UnionDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type AbstractEntityDirectiveArgs = {   discriminatorField: Scalars['String'];
-  additionalFields?: Maybe<Array<Maybe<AdditionalEntityFields>>>; };
-
-export type AbstractEntityDirectiveResolver<Result, Parent, ContextType = any, Args = AbstractEntityDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type EntityDirectiveArgs = {   embedded?: Maybe<Scalars['Boolean']>;
-  additionalFields?: Maybe<Array<Maybe<AdditionalEntityFields>>>; };
-
-export type EntityDirectiveResolver<Result, Parent, ContextType = any, Args = EntityDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type ColumnDirectiveArgs = {   overrideType?: Maybe<Scalars['String']>; };
-
-export type ColumnDirectiveResolver<Result, Parent, ContextType = any, Args = ColumnDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type IdDirectiveArgs = {  };
-
-export type IdDirectiveResolver<Result, Parent, ContextType = any, Args = IdDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type LinkDirectiveArgs = {   overrideType?: Maybe<Scalars['String']>; };
-
-export type LinkDirectiveResolver<Result, Parent, ContextType = any, Args = LinkDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type EmbeddedDirectiveArgs = {  };
-
-export type EmbeddedDirectiveResolver<Result, Parent, ContextType = any, Args = EmbeddedDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type MapDirectiveArgs = {   path: Scalars['String']; };
-
-export type MapDirectiveResolver<Result, Parent, ContextType = any, Args = MapDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  email: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  password: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type EventResolvers<ContextType = any, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  eventDate?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  lastName: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  email: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  eventDate: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type EventUpdateResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['EventUpdateResponse'] = ResolversParentTypes['EventUpdateResponse']> = {
+  success: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  message: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  event: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AuthPayLoadResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthPayLoad'] = ResolversParentTypes['AuthPayLoad']> = {
+  token: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  message: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  events?: Resolver<Maybe<Array<Maybe<ResolversTypes['Event']>>>, ParentType, ContextType>;
-  event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryEventArgs, 'eventId'>>;
-};
-
-export type EventUpdateResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['EventUpdateResponse'] = ResolversParentTypes['EventUpdateResponse']> = {
-  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  event?: Resolver<Maybe<Array<Maybe<ResolversTypes['Event']>>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+  events: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  registerEvent?: Resolver<ResolversTypes['EventUpdateResponse'], ParentType, ContextType, RequireFields<MutationRegisterEventArgs, 'name' | 'lastName' | 'email' | 'eventDate'>>;
+  login: Resolver<ResolversTypes['AuthPayLoad'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'data'>>;
+  registerEvent: Resolver<ResolversTypes['EventUpdateResponse'], ParentType, ContextType, RequireFields<MutationRegisterEventArgs, 'event'>>;
 };
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
@@ -251,12 +228,13 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type Resolvers<ContextType = any> = {
-  User?: UserResolvers<ContextType>;
-  Event?: EventResolvers<ContextType>;
-  Query?: QueryResolvers<ContextType>;
-  EventUpdateResponse?: EventUpdateResponseResolvers<ContextType>;
-  Mutation?: MutationResolvers<ContextType>;
-  Date?: GraphQLScalarType;
+  User: UserResolvers<ContextType>;
+  Event: EventResolvers<ContextType>;
+  EventUpdateResponse: EventUpdateResponseResolvers<ContextType>;
+  AuthPayLoad: AuthPayLoadResolvers<ContextType>;
+  Query: QueryResolvers<ContextType>;
+  Mutation: MutationResolvers<ContextType>;
+  Date: GraphQLScalarType;
 };
 
 
@@ -265,21 +243,3 @@ export type Resolvers<ContextType = any> = {
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
  */
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
-export type DirectiveResolvers<ContextType = any> = {
-  union?: UnionDirectiveResolver<any, any, ContextType>;
-  abstractEntity?: AbstractEntityDirectiveResolver<any, any, ContextType>;
-  entity?: EntityDirectiveResolver<any, any, ContextType>;
-  column?: ColumnDirectiveResolver<any, any, ContextType>;
-  id?: IdDirectiveResolver<any, any, ContextType>;
-  link?: LinkDirectiveResolver<any, any, ContextType>;
-  embedded?: EmbeddedDirectiveResolver<any, any, ContextType>;
-  map?: MapDirectiveResolver<any, any, ContextType>;
-};
-
-
-/**
- * @deprecated
- * Use "DirectiveResolvers" root object instead. If you wish to get "IDirectiveResolvers", add "typesPrefix: I" to your config.
- */
-export type IDirectiveResolvers<ContextType = any> = DirectiveResolvers<ContextType>;
-import { ObjectID } from 'mongodb';

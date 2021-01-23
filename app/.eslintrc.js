@@ -18,9 +18,6 @@ module.exports = {
     "@typescript-eslint/no-use-before-define": "off",
     "no-console": "warn",
     "@typescript-eslint/no-var-requires": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      { ignoreRestSiblings: true },
-    ],
+    "@typescript-eslint/no-unused-vars": ["warn", { ignoreRestSiblings: true }],
   },
 };
