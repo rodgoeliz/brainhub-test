@@ -1,11 +1,13 @@
 import { gql, useMutation } from '@apollo/client';
+import { GET_EVENTS } from 'components/EventList';
+import { RegisterEventInput } from 'generated/globalTypes';
 import React from 'react';
 import { insertEvent, insertEventVariables } from '../../generated/insertEvent';
 import EventSender from './EventSender';
 
 export const INSERT_EVENT = gql`
-  mutation insertEvent($name: String!, $lastName: String!, $eventDate: Date!, $email: String!) {
-    registerEvent(name: $name, lastName: $lastName, eventDate: $eventDate, email: $email) {
+  mutation insertEvent($event: RegisterEventInput!) {
+    registerEvent(event: $event) {
       event {
         name
         lastName
@@ -20,9 +22,11 @@ export const INSERT_EVENT = gql`
 `;
 
 const EventSenderContainer: React.FC = () => {
-  const [insertEvent, { loading, data }] = useMutation<insertEvent, insertEventVariables>(INSERT_EVENT);
+  const [insertEvent, { loading, data }] = useMutation<insertEvent, insertEventVariables>(INSERT_EVENT, {
+    refetchQueries: [{ query: GET_EVENTS }],
+  });
 
-  const handleSave = (event: insertEventVariables) => insertEvent({ variables: event });
+  const handleSave = (event: RegisterEventInput) => insertEvent({ variables: { event } });
   return <EventSender loading={loading} handleSave={handleSave} data={data?.registerEvent} />;
 };
 

@@ -1,14 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './pages/EventRegistrationPage';
+import { App } from './App';
 import reportWebVitals from './reportWebVitals';
-import { CustomApolloProvider } from './utils/react-apollo';
 
 ReactDOM.render(
   <React.StrictMode>
-    <CustomApolloProvider>
-      <App />
-    </CustomApolloProvider>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

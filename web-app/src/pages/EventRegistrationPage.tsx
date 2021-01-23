@@ -1,15 +1,14 @@
-import { Typography } from '@material-ui/core';
+import EventList from 'components/EventList';
 import React from 'react';
 import { EventSender } from '../components/EventSender';
+import RootPage from '../components/RootPage';
 
 const EventRegistrationPage: React.FC = () => {
   return (
-    <div>
-      <Typography component="h1" variant="h5">
-        Apollo graphQL component
-      </Typography>
+    <RootPage title={'EventSender.tsx'}>
       <EventSender />
-    </div>
+      <EventList />
+    </RootPage>
   );
 };
 

@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { RegisterEventInput } from "./globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: insertEvent
 // ====================================================
@@ -18,7 +20,7 @@ export interface insertEvent_registerEvent_event {
 
 export interface insertEvent_registerEvent {
   __typename: "EventUpdateResponse";
-  event: (insertEvent_registerEvent_event | null)[] | null;
+  event: insertEvent_registerEvent_event | null;
   message: string | null;
   success: boolean;
 }
@@ -28,8 +30,5 @@ export interface insertEvent {
 }
 
 export interface insertEventVariables {
-  name: string;
-  lastName: string;
-  eventDate: any;
-  email: string;
+  event: RegisterEventInput;
 }

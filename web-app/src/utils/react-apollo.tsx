@@ -2,15 +2,17 @@ import React, { useCallback, useMemo } from 'react';
 import { ApolloProvider } from '@apollo/client';
 
 import { createClient as createApolloClient } from './apollo';
+import { logout } from 'redux/UserSlice';
+import { useDispatch } from 'react-redux';
 
 const CustomApolloProvider: React.FC = ({ children }) => {
-  const { authToken, doLogout } = { authToken: '', doLogout: () => null };
+  const dispatch = useDispatch();
 
   const handleGraphQLError = useCallback(() => {
-    doLogout();
-  }, [doLogout]);
+    dispatch(logout());
+  }, [logout]);
 
-  const client = useMemo(() => createApolloClient(authToken, handleGraphQLError), [authToken, handleGraphQLError]);
+  const client = useMemo(() => createApolloClient(handleGraphQLError), [handleGraphQLError]);
 
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
