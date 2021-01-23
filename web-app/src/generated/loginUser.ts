@@ -7,14 +7,14 @@
 // GraphQL mutation operation: loginUser
 // ====================================================
 
-export interface loginUser_loginUser {
+export interface loginUser_login {
   __typename: "AuthPayLoad";
   token: string | null;
   message: string | null;
 }
 
 export interface loginUser {
-  loginUser: loginUser_loginUser;
+  login: loginUser_login;
 }
 
 export interface loginUserVariables {

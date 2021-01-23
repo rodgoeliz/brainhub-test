@@ -7,7 +7,7 @@ import LoginForm from './LoginForm';
 
 const LOGIN_USER = gql`
   mutation loginUser($email: String!, $password: String!) {
-    loginUser(data: { email: $email, password: $password }) {
+    login(data: { email: $email, password: $password }) {
       token
       message
     }
@@ -19,7 +19,7 @@ const LoginFormContainer: React.FC = () => {
 
   const [loginUserMutation] = useMutation<loginUser, loginUserVariables>(LOGIN_USER, {
     onCompleted: (data) => {
-      if (data.loginUser.token) dispatch(login(data.loginUser.token));
+      if (data.login.token) dispatch(login(data.login.token));
       dispatch(setLoading(false));
     },
   });

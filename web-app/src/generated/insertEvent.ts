@@ -21,7 +21,7 @@ export interface insertEvent_registerEvent_event {
 export interface insertEvent_registerEvent {
   __typename: "EventUpdateResponse";
   event: insertEvent_registerEvent_event | null;
-  message: string | null;
+  message: string;
   success: boolean;
 }
 
