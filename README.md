@@ -9,6 +9,22 @@
  - app ~ `npm run dev`
  - You can explore the graphql console on http://localhost:4000/graphql
 
+:warning: 
+To use call another opreation besides login on the console you have to request an user to login and add the proper header on the graphql console
+Running this operation with a header ends up in an error
+#### Run in the console without headers
+```graphql
+mutation c {
+  login(data: { email: "test@email.com", password: "ssseeeecrreeet" }) {
+    token
+  }
+}
+
+```
+#### Add the following https header on the graphql console
+`{ "authorization": "Bearer sometokenReturnedfromlogin" }`
+
+
 ## How to run - WebApp
  - install node version manager
  - move terminal cursor to root/web-app
